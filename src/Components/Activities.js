@@ -1,16 +1,31 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { activities, userInfo } from "../api";
+import { fetchActivities, userInfo } from "../api";
+import { Link } from "react-router-dom";
 
 const Activities = ({ setToken, setUserdata }) => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const history = useNavigate();
+  const [activities, setActivities] = useState("");
+
+  useEffect(() => {
+    fetchActivities().then((activities) => {
+      setActivities(activities);
+    });
+  }, []);
 
   return (
     <>
-      <h2>activities</h2>
+      <div className="activities-detail">
+        {activities &&
+          activities.map(({ id, name, description }) => {
+            return (
+              <div key={id}>
+                <h3>{name} </h3>
+                <h4> {description}</h4>
+              </div>
+            );
+          })}
+        {console.log(activities)}
+      </div>
     </>
   );
 };

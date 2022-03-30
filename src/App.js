@@ -9,19 +9,22 @@ import {
   Activities,
   Login,
   Register,
+  Add,
+  Update,
 } from "./Components";
 
 function App() {
   const [token, setToken] = useState("");
   const [userdata, setUserdata] = useState(null);
-  const [posts, setPosts] = useState([]);
+  const [routines, setRoutines] = useState([]);
+  const [singleRoutine, setSingleRoutine] = useState({});
 
   useEffect(() => {
     fetchUser();
-    fetchRoutines().then((posts) => {
-      setPosts(posts);
+    fetchRoutines().then((routines) => {
+      setRoutines(routines);
     });
-  }, []);
+  }, [token]);
 
   const fetchUser = async () => {
     const IsToken = localStorage.getItem("token");
@@ -51,8 +54,9 @@ function App() {
           path="/routines"
           element={
             <Routines
-              posts={posts}
-              setPosts={setPosts}
+              setSingleRoutine={setSingleRoutine}
+              routines={routines}
+              setRoutines={setRoutines}
               setUserdata={setUserdata}
               userdata={userdata}
               token={token}
@@ -60,13 +64,30 @@ function App() {
             />
           }
         />
+
+        <Route path="/add" element={<Add setRoutines={setRoutines} />} />
+
+        <Route
+          path="/update/:id"
+          element={
+            <Update
+              singleRoutine={singleRoutine}
+              setRoutines={setRoutines}
+              userdata={userdata}
+              setUserdata={setUserdata}
+              token={token}
+              setToken={setToken}
+            />
+          }
+        />
+
         <Route
           exact
           path="/myroutines"
           element={
             <MyRoutines
-              posts={posts}
-              setPosts={setPosts}
+              routines={routines}
+              setRoutines={setRoutines}
               setUserdata={setUserdata}
               userdata={userdata}
               token={token}
@@ -80,8 +101,8 @@ function App() {
           path="/activities"
           element={
             <Activities
-              posts={posts}
-              setPosts={setPosts}
+              routines={routines}
+              setRoutines={setRoutines}
               setUserdata={setUserdata}
               userdata={userdata}
               token={token}

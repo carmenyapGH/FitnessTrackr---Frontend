@@ -7,11 +7,9 @@ export const fetchRoutines = async () => {
         "Content-Type": "application/json",
       },
     });
-    const {
-      data: { posts },
-    } = await response.json();
-
-    return posts;
+    const info = await response.json();
+    console.log("fetchRoutine_info =>", info);
+    return info;
   } catch (error) {
     console.error(error);
   }
@@ -24,11 +22,9 @@ export const fetchMyRoutines = async (username) => {
         "Content-Type": "application/json",
       },
     });
-    const {
-      data: { posts },
-    } = await response.json();
-
-    return posts;
+    const info = await response.json();
+    console.log("fetchMyRoutine_info =>", info);
+    return info;
   } catch (error) {
     console.error(error);
   }
@@ -36,13 +32,13 @@ export const fetchMyRoutines = async (username) => {
 
 export const fetchActivities = async () => {
   try {
-    const userResponse = await fetch(`${BASE_URL}/activities`, {
+    const response = await fetch(`${BASE_URL}/activities`, {
       headers: {
         "Content-Type": "application/json",
       },
     });
-    const info = await userResponse.json();
-
+    const info = await response.json();
+    console.log("fetchActivities_info =>", info);
     return info;
   } catch (error) {
     console.error(`Error retrieving activities ${error}`);
@@ -60,11 +56,9 @@ export const fetchActivitiesId = async (activityId) => {
         },
       }
     );
-    const {
-      data: { posts },
-    } = await response.json();
+    const info = await response.json();
 
-    return posts;
+    return info;
   } catch (error) {
     console.error(error);
   }
@@ -79,29 +73,32 @@ export const addActivities = async (name, description) => {
         description: description,
       }),
     });
-    const data = await response.json();
-
-    return data;
+    const info = await response.json();
+    console.log("addActivities_info =>", data);
+    return info;
   } catch (error) {
     console.error(error);
   }
 };
 
-export const AddRoutines = async (name, goal, isPublic) => {
+export const AddRoutines = async (localSourcedToken, name, goal, isPublic) => {
   try {
     const response = await fetch(`${BASE_URL}/routines`, {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localSourcedToken}`,
+      },
+
       body: JSON.stringify({
         name: name,
         goal: goal,
         isPublic: isPublic,
       }),
     });
-    const {
-      data: { posts },
-    } = await response.json();
-
-    return posts;
+    const info = await response.json();
+    console.log("addRoutines_info =>", info);
+    return info;
   } catch (error) {
     console.error(error);
   }
@@ -125,15 +122,15 @@ export const addRoutineActivities = async (
         }),
       }
     );
-    const data = await response.json();
+    const info = await response.json();
 
-    return data;
+    return info;
   } catch (error) {
     console.error(error);
   }
 };
 
-export const updateRoutines = async (name, goal, isPublic) => {
+export const updateRoutines = async (name, goal, isPublic, routineId) => {
   try {
     const response = await fetch(`${BASE_URL}/routines/${routineId}`, {
       method: "PATCH",
@@ -143,7 +140,7 @@ export const updateRoutines = async (name, goal, isPublic) => {
       }),
     });
     const info = await response.json();
-
+    console.log("addRoutines_info =>", info);
     return info;
   } catch (err) {
     console.log(err);
@@ -267,13 +264,13 @@ export const register = async (username, password) => {
 
 export const userInfo = async (token) => {
   try {
-    const userResponse = await fetch(`${BASE_URL}/users/me`, {
+    const response = await fetch(`${BASE_URL}/users/me`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
     });
-    const info = await userResponse.json();
+    const info = await response.json();
 
     return info;
   } catch (error) {

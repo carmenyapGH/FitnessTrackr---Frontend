@@ -64,9 +64,9 @@ const Navbar = ({ userdata, setToken, setUserdata }) => {
           )}
         </div>
 
-        <div className="horizontal-nav3">
+        {/* <div className="horizontal-nav3">
           {userdata ? <span>Hello {userdata.username} </span> : null}
-        </div>
+        </div> */}
       </div>
     </>
   );
