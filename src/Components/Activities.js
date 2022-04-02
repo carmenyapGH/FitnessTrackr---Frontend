@@ -22,6 +22,7 @@ const Activities = ({ setToken, setUserdata }) => {
               <div key={id}>
                 <h3>{name} </h3>
                 <h4> {description}</h4>
+                <Link to={`/EditActivity/${id}`}>EDIT ACTIVITY</Link>
               </div>
             );
           })}

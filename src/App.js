@@ -12,6 +12,7 @@ import {
   Add,
   Update,
   NewActivity,
+  EditActivity,
 } from "./Components";
 
 function App() {
@@ -134,6 +135,7 @@ function App() {
           }
         />
         <Route path="/newActivity" element={<NewActivity token={token} />} />
+        <Route path="/EditActivity/:id" element={<EditActivity />} />
       </Routes>
     </div>
   );
