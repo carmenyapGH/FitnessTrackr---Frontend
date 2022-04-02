@@ -11,6 +11,7 @@ import {
   Register,
   Add,
   Update,
+  NewActivity,
 } from "./Components";
 
 function App() {
@@ -132,6 +133,7 @@ function App() {
             />
           }
         />
+        <Route path="/newActivity" element={<NewActivity token={token} />} />
       </Routes>
     </div>
   );

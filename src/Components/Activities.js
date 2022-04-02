@@ -14,6 +14,7 @@ const Activities = ({ setToken, setUserdata }) => {
 
   return (
     <>
+      <Link to="/NewActivity">ADD ACTIVITY</Link>
       <div className="activities-detail">
         {activities &&
           activities.map(({ id, name, description }) => {

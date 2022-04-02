@@ -25,6 +25,8 @@ const Register = (props) => {
 
     if (info.error) {
       return setError(info.error.message);
+    } else {
+      history.push("/");
     }
 
     setToken(info.token);
