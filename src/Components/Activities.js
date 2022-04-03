@@ -3,15 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { fetchActivities, userInfo } from "../api";
 import { Link } from "react-router-dom";
 
-const Activities = ({ setToken, setUserdata }) => {
-  const [activities, setActivities] = useState("");
-
-  useEffect(() => {
-    fetchActivities().then((activities) => {
-      setActivities(activities);
-    });
-  }, []);
-
+const Activities = ({ setToken, setUserdata, activities }) => {
   return (
     <>
       <Link to="/NewActivity">ADD ACTIVITY</Link>

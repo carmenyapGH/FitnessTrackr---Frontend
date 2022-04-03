@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
-import { fetchRoutines, userInfo } from "./api";
+import { fetchRoutines, userInfo, fetchActivities } from "./api";
 import {
   Navbar,
   Home,
@@ -20,6 +20,14 @@ function App() {
   const [userdata, setUserdata] = useState(null);
   const [routines, setRoutines] = useState([]);
   const [singleRoutine, setSingleRoutine] = useState({});
+
+  const [activities, setActivities] = useState("");
+
+  useEffect(() => {
+    fetchActivities().then((activities) => {
+      setActivities(activities);
+    });
+  }, []);
 
   useEffect(() => {
     fetchUser();
@@ -103,6 +111,7 @@ function App() {
           path="/activities"
           element={
             <Activities
+              activities={activities}
               routines={routines}
               setRoutines={setRoutines}
               setUserdata={setUserdata}
@@ -135,7 +144,16 @@ function App() {
           }
         />
         <Route path="/newActivity" element={<NewActivity token={token} />} />
-        <Route path="/EditActivity/:id" element={<EditActivity />} />
+        <Route
+          path="/EditActivity/:id"
+          element={
+            <EditActivity
+              activities={activities}
+              fetchActivities={fetchActivities}
+              token={token}
+            />
+          }
+        />
       </Routes>
     </div>
   );
