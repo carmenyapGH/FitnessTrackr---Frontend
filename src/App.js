@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
-import { fetchRoutines, userInfo } from "./api";
+import {
+  fetchRoutines,
+  fetchMyRoutines,
+  userInfo,
+  fetchActivities,
+  deleteRoutinesActivities,
+} from "./api";
 import {
   Navbar,
   Home,
@@ -11,6 +17,9 @@ import {
   Register,
   Add,
   Update,
+  AddRoutineActivities,
+  UpdateRoutineActivities,
+  DeleteRoutineActivities,
 } from "./Components";
 
 function App() {
@@ -18,12 +27,27 @@ function App() {
   const [userdata, setUserdata] = useState(null);
   const [routines, setRoutines] = useState([]);
   const [singleRoutine, setSingleRoutine] = useState({});
+  const [singleActivity, setSingleActivity] = useState({});
+  const [activities, setActivities] = useState("");
+  const [myroutines, setMyroutines] = useState([]);
+  const [myroutineActivity, setMyroutineActivity] = useState([]);
 
   useEffect(() => {
     fetchUser();
-    fetchRoutines().then((routines) => {
-      setRoutines(routines);
-    });
+    console.log("userdata", userdata);
+
+    try {
+      fetchActivities().then((activities) => {
+        setActivities(activities);
+        console.log("App-fetchActivit", activities);
+      });
+
+      fetchRoutines().then((routines) => {
+        setRoutines(routines);
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }, [token]);
 
   const fetchUser = async () => {
@@ -54,29 +78,95 @@ function App() {
           path="/routines"
           element={
             <Routines
-              setSingleRoutine={setSingleRoutine}
               routines={routines}
               setRoutines={setRoutines}
-              setUserdata={setUserdata}
               userdata={userdata}
+              setUserdata={setUserdata}
               token={token}
               setToken={setToken}
+              singleRoutine={singleRoutine}
             />
           }
         />
 
-        <Route path="/add" element={<Add setRoutines={setRoutines} />} />
+        <Route
+          path="/add"
+          element={
+            <Add
+              userdata={userdata}
+              setUserdata={setUserdata}
+              setRoutines={setRoutines}
+              myroutines={myroutines}
+              setMyroutines={setMyroutines}
+            />
+          }
+        />
 
         <Route
           path="/update/:id"
           element={
             <Update
               singleRoutine={singleRoutine}
+              setSingleRoutine={setSingleRoutine}
+              setRoutines={setRoutines}
+              userdata={userdata}
+              setUserdata={setUserdata}
+              myroutines={myroutines}
+              setMyroutines={setMyroutines}
+            />
+          }
+        />
+
+        <Route
+          path="/addRoutineActivities/:id"
+          element={
+            <AddRoutineActivities
+              singleRoutine={singleRoutine}
+              setSingleRoutine={setSingleRoutine}
               setRoutines={setRoutines}
               userdata={userdata}
               setUserdata={setUserdata}
               token={token}
               setToken={setToken}
+              activities={activities}
+              setActivities={setActivities}
+              setMyroutines={setMyroutines}
+              myroutines={myroutines}
+            />
+          }
+        />
+
+        <Route
+          path="/deleteRoutineActivities/:id"
+          element={
+            <DeleteRoutineActivities
+              singleRoutine={singleRoutine}
+              setRoutines={setRoutines}
+              userdata={userdata}
+              token={token}
+              setToken={setToken}
+              activities={activities}
+              setActivities={setActivities}
+              setMyroutines={setMyroutines}
+              myroutines={myroutines}
+            />
+          }
+        />
+        <Route
+          path="/updateRoutineActivities/:id"
+          element={
+            <UpdateRoutineActivities
+              singleRoutine={singleRoutine}
+              setSingleRoutine={setSingleRoutine}
+              singleActivity={singleActivity}
+              setSingleActivity={setSingleActivity}
+              userdata={userdata}
+              setUserdata={setUserdata}
+              activities={activities}
+              setActivities={setActivities}
+              myroutines={myroutines}
+              setMyroutines={setMyroutines}
+              setRoutines={setRoutines}
             />
           }
         />
@@ -86,12 +176,13 @@ function App() {
           path="/myroutines"
           element={
             <MyRoutines
-              routines={routines}
-              setRoutines={setRoutines}
-              setUserdata={setUserdata}
-              userdata={userdata}
               token={token}
-              setToken={setToken}
+              setRoutines={setRoutines}
+              userdata={userdata}
+              setSingleRoutine={setSingleRoutine}
+              setSingleActivity={setSingleActivity}
+              myroutines={myroutines}
+              setMyroutines={setMyroutines}
             />
           }
         />
@@ -107,6 +198,8 @@ function App() {
               userdata={userdata}
               token={token}
               setToken={setToken}
+              activities={activities}
+              setActivities={setActivities}
             />
           }
         />

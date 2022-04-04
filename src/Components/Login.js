@@ -11,20 +11,22 @@ const Login = ({ setToken, setUserdata }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setError("");
+    try {
+      const info = await login(username, password);
+      if (info.error) {
+        return setError(info.error);
+      }
 
-    const info = await login(username, password);
-
-    if (info.error) {
-      return setError(info.error.message);
+      setToken(info.token);
+      localStorage.setItem("token", info.token);
+      const infoU = await userInfo(info.token);
+      setUserdata(infoU.data);
+      setUsername("");
+      setPassword("");
+      history("/");
+    } catch (e) {
+      console.error(e);
     }
-
-    setToken(info.token);
-    localStorage.setItem("token", info.token);
-    const infoU = await userInfo(info.token);
-    setUserdata(infoU.data);
-    setUsername("");
-    setPassword("");
-    history("/");
   };
 
   return (
@@ -60,7 +62,7 @@ const Login = ({ setToken, setUserdata }) => {
           />
         </div>
 
-        <button>submit</button>
+        <button>Log In</button>
       </form>
       <p>{error} </p>
     </>

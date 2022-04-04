@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const linkStyle = {
-  // color: "white",
+  color: "white",
   margin: "10px",
   fontSize: "20px",
   display: "inline-block",
@@ -15,7 +15,7 @@ const Navbar = ({ userdata, setToken, setUserdata }) => {
     <>
       <div className="heading">
         <div className="horizontal-nav1">
-          <h1 className="prj-name">Fitness Tracker</h1>
+          <span className="prj-name">Fitness Tracker</span>
         </div>
 
         <div className="horizontal-nav2">
@@ -64,9 +64,9 @@ const Navbar = ({ userdata, setToken, setUserdata }) => {
           )}
         </div>
 
-        {/* <div className="horizontal-nav3">
+        <div className="horizontal-nav3">
           {userdata ? <span>Hello {userdata.username} </span> : null}
-        </div> */}
+        </div>
       </div>
     </>
   );

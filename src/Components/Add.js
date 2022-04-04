@@ -1,27 +1,42 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { AddRoutines, fetchRoutines } from "../api";
+import { addRoutines, fetchMyRoutines, fetchRoutines } from "../api";
 
-const Add = ({ setRoutines }) => {
+const Add = ({
+  userdata,
+  setUserdata,
+  setRoutines,
+  myroutines,
+  setMyroutines,
+}) => {
   const [name, setName] = useState("");
   const [goal, setGoal] = useState("");
   const [isPublic, setisPublic] = useState(false);
   const history = useNavigate();
-
   const handleSubmit = async (event) => {
     console, event.preventDefault();
     const localSourcedToken = localStorage.getItem("token");
-    const response = await AddRoutines(localSourcedToken, name, goal, isPublic);
-    console.log("Add==>", response);
 
-    if (response.success) {
-      setName("");
-      setGoal("");
-      setisPublic(false);
+    try {
+      const response = await addRoutines(
+        localSourcedToken,
+        name,
+        goal,
+        isPublic
+      );
+
+      fetchMyRoutines(userdata.username).then((myroutines) => {
+        setMyroutines(myroutines);
+      });
       fetchRoutines().then((routines) => {
         setRoutines(routines);
       });
-      history("/routines");
+      setName("");
+      setGoal("");
+      setisPublic(false);
+      history("/myroutines");
+    } catch (e) {
+      console.error(e);
     }
   };
 
@@ -29,7 +44,7 @@ const Add = ({ setRoutines }) => {
     <div>
       <form className="add-form" onSubmit={handleSubmit}>
         <div className="add-form-grp">
-          <label>name</label>
+          <label>Name</label>
           <input
             type="text"
             value={name}
@@ -39,7 +54,7 @@ const Add = ({ setRoutines }) => {
         </div>
 
         <div className="add-form-grp">
-          <label>goal</label>
+          <label>Goal</label>
           <textarea
             type="text"
             value={goal}

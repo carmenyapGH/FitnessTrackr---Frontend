@@ -8,10 +8,9 @@ export const fetchRoutines = async () => {
       },
     });
     const info = await response.json();
-    console.log("fetchRoutine_info =>", info);
     return info;
   } catch (error) {
-    console.error(error);
+    console.error(`Error retrieving routines ${error}`);
   }
 };
 
@@ -23,10 +22,9 @@ export const fetchMyRoutines = async (username) => {
       },
     });
     const info = await response.json();
-    console.log("fetchMyRoutine_info =>", info);
     return info;
   } catch (error) {
-    console.error(error);
+    console.error(`Error retrieving my routines ${error}`);
   }
 };
 
@@ -38,11 +36,9 @@ export const fetchActivities = async () => {
       },
     });
     const info = await response.json();
-    console.log("fetchActivities_info =>", info);
     return info;
   } catch (error) {
     console.error(`Error retrieving activities ${error}`);
-    // throw error;
   }
 };
 
@@ -60,7 +56,7 @@ export const fetchActivitiesId = async (activityId) => {
 
     return info;
   } catch (error) {
-    console.error(error);
+    console.error(`Error fetching routine Id ${error}`);
   }
 };
 
@@ -74,14 +70,13 @@ export const addActivities = async (name, description) => {
       }),
     });
     const info = await response.json();
-    console.log("addActivities_info =>", data);
     return info;
   } catch (error) {
-    console.error(error);
+    console.error(`Error adding an activity ${error}`);
   }
 };
 
-export const AddRoutines = async (localSourcedToken, name, goal, isPublic) => {
+export const addRoutines = async (localSourcedToken, name, goal, isPublic) => {
   try {
     const response = await fetch(`${BASE_URL}/routines`, {
       method: "POST",
@@ -97,53 +92,66 @@ export const AddRoutines = async (localSourcedToken, name, goal, isPublic) => {
       }),
     });
     const info = await response.json();
-    console.log("addRoutines_info =>", info);
     return info;
   } catch (error) {
-    console.error(error);
+    console.error(`Error adding routines ${error}`);
   }
 };
 
 export const addRoutineActivities = async (
+  localSourcedToken,
   routineId,
-  activityId,
+  activity,
   count,
   duration
 ) => {
   try {
     const response = await fetch(
-      `${BASE_URL}/routines${routineId}/activities`,
+      `${BASE_URL}/routines/${routineId}/activities`,
       {
         method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localSourcedToken}`,
+        },
         body: JSON.stringify({
-          activityId: activityId,
+          activityId: activity,
           count: count,
           duration: duration,
         }),
       }
     );
     const info = await response.json();
-
     return info;
   } catch (error) {
-    console.error(error);
+    console.error(`Error retrieving routine Id ${error}`);
   }
 };
 
-export const updateRoutines = async (name, goal, isPublic, routineId) => {
+export const updateRoutines = async (
+  localSourcedToken,
+  name,
+  goal,
+  isPublic,
+  routineId
+) => {
   try {
     const response = await fetch(`${BASE_URL}/routines/${routineId}`, {
       method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localSourcedToken}`,
+      },
       body: JSON.stringify({
         name: name,
         goal: goal,
+        isPublic: isPublic,
       }),
     });
     const info = await response.json();
-    console.log("addRoutines_info =>", info);
     return info;
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    console.error(`Error updating routines ${error}`);
   }
 };
 
@@ -159,17 +167,26 @@ export const updateActivities = async (name, description, activityId) => {
     const info = await response.json();
 
     return info;
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    console.error(`Error updating activities ${error}`);
   }
 };
 
-export const updateRoutineActivities = async (routineId, count, duration) => {
+export const updateRoutineActivities = async (
+  localSourcedToken,
+  routineActivityId,
+  count,
+  duration
+) => {
   try {
     const response = await fetch(
-      `${BASE_URL}/api/routine_activities/${activityId}`,
+      `${BASE_URL}/routine_activities/${routineActivityId}`,
       {
         method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localSourcedToken}`,
+        },
         body: JSON.stringify({
           count: count,
           duration: duration,
@@ -177,17 +194,16 @@ export const updateRoutineActivities = async (routineId, count, duration) => {
       }
     );
     const info = await response.json();
-
     return info;
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    console.error(`Error updating routine activity ${error}`);
   }
 };
 
-export const deleteRoutinesActivities = async (routineActivityId, token) => {
+export const deleteRoutineActivities = async (token, routineActivityId) => {
   try {
     const response = await fetch(
-      `${BASE_URL}/routine_activities/${routine_id}`,
+      `${BASE_URL}/routine_activities/${routineActivityId}`,
       {
         method: "DELETE",
         headers: {
@@ -199,8 +215,8 @@ export const deleteRoutinesActivities = async (routineActivityId, token) => {
     const info = await response.json();
 
     return info;
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    console.error(`Error deleting a routine activity ${error}`);
   }
 };
 
@@ -216,8 +232,8 @@ export const deleteRoutines = async (routine_id, token) => {
     const info = await response.json();
 
     return info;
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    console.error(`Error deleting a routine ${error}`);
   }
 };
 
@@ -237,7 +253,7 @@ export const login = async (username, password) => {
     const info = await response.json();
     return info;
   } catch (error) {
-    console.error(error);
+    console.error(`Error loging in a user ${error}`);
   }
 };
 
