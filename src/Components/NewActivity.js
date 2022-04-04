@@ -23,7 +23,7 @@ const NewActivity = () => {
     const activity = response.json();
     console.log(activity);
     fetch(`${BASE_URL}/activities`);
-    // history.push("/Activities");
+    history.push("/Activities");
   };
 
   return (

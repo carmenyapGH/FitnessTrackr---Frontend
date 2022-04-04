@@ -21,23 +21,19 @@ const EditActivity = ({ activities, fetchActivities, token }) => {
   const { id } = useParams();
   // console.log(id);
 
-  const updateActivity = () => {
-    fetch(`${BASE_URL}/activities/${id}`, {
+  const updateActivity = async (e) => {
+    e.preventDefault();
+    const response = await fetch(`${BASE_URL}/activities/${id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
-        name: activityName.value,
-        description: activityDesc.value,
+        name: activityName,
+        description: activityDesc,
       }),
-    })
-      .then((response) => response.json())
-      .then((result) => {
-        console.log(result);
-      })
-      .catch(console.error);
+    });
   };
 
   return (
