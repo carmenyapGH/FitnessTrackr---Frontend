@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { register, userInfo } from "../api";
+import { register } from "../api";
 
 const Register = (props) => {
   const setToken = props.setToken;
   const setUserdata = props.setUserdata;
-
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
@@ -21,21 +20,23 @@ const Register = (props) => {
       return;
     }
 
-    const info = await register(username, password);
+    try {
+      const info = await register(username, password);
 
-    if (info.error) {
-      return setError(info.error.message);
-    } else {
-      history.push("/");
+      if (info.error) {
+        return setError(info.error);
+      }
+
+      setToken(info.token);
+      localStorage.setItem("token", info.token);
+
+      setUsername("");
+      setPassword("");
+      setConfirm("");
+      history("/");
+    } catch (e) {
+      console.error(e);
     }
-
-    setToken(info.token);
-    localStorage.setItem("token", info.data.token);
-
-    setUsername("");
-    setPassword("");
-    setConfirm("");
-    history("/");
   };
 
   return (

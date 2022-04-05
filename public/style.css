@@ -1,13 +1,117 @@
-/* .routine-detail {
-  border: 1px solid;
-  padding: 10px;
-  /* box-shadow: 5px 10px rgb(213, 210, 232); */
-/* }  */
+.heading {
+  color: white;
+  background-color: #463f36;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
 
+.horizontal-nav1 {
+  display: flex;
+  font-size: 2em;
+  margin: 10px;
+}
+
+.horizontal-nav3 {
+  display: flex;
+
+  font-size: 1.5em;
+  margin: 10px;
+}
+
+.horizontal-nav2 {
+  display: flex;
+  font-size: 1.5em;
+  margin: 10px;
+}
 .activities-detail,
 .routines-detail,
 .myroutines-detail {
   border: 1px solid;
   padding: 10px;
   box-shadow: 5px 10px rgb(213, 210, 232);
+}
+
+.myroutine-list {
+  font-weight: bold;
+  font-size: 17px;
+}
+
+.addmyroutine {
+  text-decoration: none;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.register-form input,
+.login-form input {
+  padding: 8px;
+  width: 45%;
+}
+
+/* .add-form input, */
+.search-form-grp input {
+  height: 30px;
+  width: 70%;
+  font-size: 20px;
+  padding-left: 10px;
+}
+
+.textarea {
+  overflow: auto;
+  resize: none;
+  width: 200px;
+  height: 100px;
+}
+
+.update-form input[type="text"],
+.update-form textarea,
+.add-form input[type="text"],
+.add-form textarea {
+  padding: 8px;
+  width: 50%;
+}
+
+.deleteRoutineActivities-form label,
+.updateRoutineActivities-form label,
+.addRoutineActivities-form label,
+.update-form label,
+.register-form label,
+.add-form label,
+.login-form label {
+  display: block;
+}
+
+.deleteRoutineActivities-form,
+.updateRoutineActivities-form,
+.updateRoutineActivities-form-grp,
+.addRoutineActivities-form-grp,
+.update-form .update-form-grp,
+.add-form .add-form-grp,
+.register-form .register-form-grp,
+.login-form .login-form-grp {
+  padding-bottom: 15px;
+}
+
+.tab {
+  margin-left: 10px;
+}
+
+.deleteButton {
+  margin-left: 10px;
+}
+
+.clickbtns {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-bottom: 5px;
+  gap: 10px;
+}
+
+.home-form,
+.profile-hdr1-form,
+.profile-hdr2-form {
+  box-shadow: 0 5x 15px 0 rgba(0, 0, 0, 0.5);
+  text-align: center;
 }
