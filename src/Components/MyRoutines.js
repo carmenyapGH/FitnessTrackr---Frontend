@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { userInfo } from "../api";
 import { fetchMyRoutines, fetchRoutines, deleteRoutines } from "../api";
 
 const MyRoutines = ({
@@ -21,10 +20,15 @@ const MyRoutines = ({
   useEffect(async () => {
     try {
       const myRtns = await fetchMyRoutines(userdata.username);
-
       setMyroutines(myRtns);
     } catch (e) {
-      console.error(e);
+      // console.error(e);
+      setError("");
+      if (userdata === null) {
+        setError(" You must be logged in to perform this action!");
+      } else {
+        setError(err.message);
+      }
     }
   }, []);
 
@@ -47,6 +51,8 @@ const MyRoutines = ({
 
   return (
     <>
+      {error && <div> {error}</div>}
+
       {userdata && (
         <div>
           <Link className="addmyroutine" to="/add">
@@ -54,100 +60,103 @@ const MyRoutines = ({
           </Link>
         </div>
       )}
-      <div className="myroutines-hdr">
-        {myroutines.map((myroutine) => {
-          const { id, name, goal, creatorName, activities } = myroutine;
 
-          return (
-            <div className="myroutines-detail" key={id}>
-              <h3>{name} </h3>
-              <h4> {goal}</h4>
+      {userdata && (
+        <div className="myroutines-hdr">
+          {myroutines.map((myroutine) => {
+            const { id, name, goal, creatorName, activities } = myroutine;
 
-              <ul className="myroutine-list">
-                {activities.map((myroutineActivity) => {
-                  const {
-                    id,
-                    name,
-                    duration,
-                    count,
-                    routineActivityId,
-                    description,
-                  } = myroutineActivity;
+            return (
+              <div className="myroutines-detail" key={id}>
+                <h3>{name} </h3>
+                <h4> {goal}</h4>
 
-                  return (
-                    <li key={routineActivityId}>
-                      <span> {name} </span>
-                      <span className="tab"> ({duration} mins</span>
-                      <span> {count} reps) </span>
-                    </li>
-                  );
-                })}
-              </ul>
+                <ul className="myroutine-list">
+                  {activities.map((myroutineActivity) => {
+                    const {
+                      id,
+                      name,
+                      duration,
+                      count,
+                      routineActivityId,
+                      description,
+                    } = myroutineActivity;
 
-              <div className="clickbtns">
-                <div>
-                  <button
-                    className="updatebtn"
-                    onClick={() => {
-                      setSingleRoutine(myroutine);
-                      history(`/update/${id}`);
-                    }}
-                  >
-                    Update Routine
-                  </button>
-                </div>
+                    return (
+                      <li key={routineActivityId}>
+                        <span> {name} </span>
+                        <span className="tab"> ({duration} mins</span>
+                        <span> {count} reps) </span>
+                      </li>
+                    );
+                  })}
+                </ul>
 
-                <div>
-                  <button
-                    className="deletebtn"
-                    onClick={() => handleDelete(id, token)}
-                  >
-                    Delete Routine
-                  </button>
-                </div>
+                <div className="clickbtns">
+                  <div>
+                    <button
+                      className="updatebtn"
+                      onClick={() => {
+                        setSingleRoutine(myroutine);
+                        history(`/update/${id}`);
+                      }}
+                    >
+                      Update Routine
+                    </button>
+                  </div>
 
-                <div>
-                  <button
-                    className="addRoutineActivitiesbtn"
-                    onClick={() => {
-                      setSingleRoutine(myroutine);
-                      history(`/addRoutineActivities/${id}`);
-                    }}
-                  >
-                    Add Activities
-                  </button>
-                </div>
+                  <div>
+                    <button
+                      className="deletebtn"
+                      onClick={() => handleDelete(id, token)}
+                    >
+                      Delete Routine
+                    </button>
+                  </div>
 
-                <div>
-                  <button
-                    className="updateRoutineActivitiesbtn"
-                    onClick={() => {
-                      setSingleActivity(myroutineActivity);
-                      setSingleRoutine(myroutine);
-                      history(`/updateRoutineActivities/${id}`);
-                    }}
-                  >
-                    Update Activities
-                  </button>
-                </div>
+                  <div>
+                    <button
+                      className="addRoutineActivitiesbtn"
+                      onClick={() => {
+                        setSingleRoutine(myroutine);
+                        history(`/addRoutineActivities/${id}`);
+                      }}
+                    >
+                      Add Activities
+                    </button>
+                  </div>
 
-                <div>
-                  <button
-                    className="deleteRoutineActivitiesbtn"
-                    onClick={() => {
-                      setSingleActivity(myroutineActivity);
-                      setSingleRoutine(myroutine);
-                      history(`/deleteRoutineActivities/${id}`);
-                    }}
-                  >
-                    Delete Activities
-                  </button>
+                  <div>
+                    <button
+                      className="updateRoutineActivitiesbtn"
+                      onClick={() => {
+                        setSingleActivity(myroutineActivity);
+                        setSingleRoutine(myroutine);
+                        history(`/updateRoutineActivities/${id}`);
+                      }}
+                    >
+                      Update Activities
+                    </button>
+                  </div>
+
+                  <div>
+                    <button
+                      className="deleteRoutineActivitiesbtn"
+                      onClick={() => {
+                        setSingleActivity(myroutineActivity);
+                        setSingleRoutine(myroutine);
+                        history(`/deleteRoutineActivities/${id}`);
+                      }}
+                    >
+                      Delete Activities
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          );
-        })}
-      </div>
+            );
+          })}
+        </div>
+      )}
     </>
   );
 };
