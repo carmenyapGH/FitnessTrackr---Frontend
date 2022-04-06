@@ -14,11 +14,11 @@ const Activities = ({ setToken, setUserdata }) => {
 
   return (
     <>
-      <div className="activities-detail">
+      <div className="activitiesPage">
         {activities &&
           activities.map(({ id, name, description }) => {
             return (
-              <div key={id}>
+              <div key={id} className="activitiesBorder">
                 <h3>{name} </h3>
                 <h4> {description}</h4>
               </div>

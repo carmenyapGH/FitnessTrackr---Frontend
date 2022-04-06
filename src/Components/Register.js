@@ -38,46 +38,49 @@ const Register = (props) => {
 
   return (
     <>
-      <h2> Register</h2>
-      <form className="register-form" onSubmit={handleSubmit}>
-        <div className="register-form-grp">
-          <label>Name</label>
-          <input
-            required
-            type="text"
-            placeholder="Enter username.."
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-        </div>
+      <body className="register-body">
+        <form className="register-form" onSubmit={handleSubmit}>
+          <h2> Register</h2>
 
-        <div className="register-form-grp">
-          <label>Password</label>
-          <input
-            required
-            type="password"
-            minLength="8"
-            placeholder="Enter password.."
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
+          <div className="register-form-grp">
+            <label></label>
+            <input
+              required
+              type="text"
+              placeholder="Enter username.."
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+          </div>
 
-        <div className="register-form-grp">
-          <label>Confirm Password</label>
-          <input
-            required
-            type="password"
-            minLength="8"
-            placeholder="Confirm password.."
-            value={confirm}
-            onChange={(e) => setConfirm(e.target.value)}
-          />
-        </div>
+          <div className="register-form-grp">
+            <label></label>
+            <input
+              required
+              type="password"
+              minLength="8"
+              placeholder="Enter password.."
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
 
-        <button type="submit">Register</button>
-      </form>
-      <p>{error} </p>
+          <div className="register-form-grp">
+            <label>Confirm Password </label>
+            <input
+              required
+              type="password"
+              minLength="8"
+              placeholder=""
+              value={confirm}
+              onChange={(e) => setConfirm(e.target.value)}
+            />
+          </div>
+
+          <button className="register-button">Register</button>
+        </form>
+        <p>{error} </p>
+      </body>
     </>
   );
 };

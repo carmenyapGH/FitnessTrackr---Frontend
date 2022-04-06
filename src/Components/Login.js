@@ -29,40 +29,41 @@ const Login = ({ setToken, setUserdata }) => {
 
   return (
     <>
-      <form className="login-form" onSubmit={handleSubmit}>
-        <h2>Login</h2>
+      <body className="login-body">
+        <form className="login-form" onSubmit={handleSubmit}>
+          <h2>Login</h2>
 
-        <div className="login-form-grp">
-          <label>Name</label>
-          <input
-            required
-            type="text"
-            placeholder="Enter username.."
-            value={username}
-            onChange={(event) => {
-              setUsername(event.target.value);
-            }}
-          />
-        </div>
+          <div className="login-form-grp">
+            <label></label>
+            <input
+              required
+              type="text"
+              placeholder="Enter username.."
+              value={username}
+              onChange={(event) => {
+                setUsername(event.target.value);
+              }}
+            />
+          </div>
 
-        <div className="login-form-grp">
-          <label>Password</label>
-          <input
-            required
-            type="text"
-            placeholder="Enter password.."
-            type="password"
-            minLength="8"
-            value={password}
-            onChange={(event) => {
-              setPassword(event.target.value);
-            }}
-          />
-        </div>
+          <div className="login-form-grp">
+            <label></label>
+            <input
+              required
+              placeholder="Enter password.."
+              type="password"
+              minLength="8"
+              value={password}
+              onChange={(event) => {
+                setPassword(event.target.value);
+              }}
+            />
+          </div>
 
-        <button>submit</button>
-      </form>
-      <p>{error} </p>
+          <button className="login-button">Login</button>
+        </form>
+        <p>{error} </p>
+      </body>
     </>
   );
 };

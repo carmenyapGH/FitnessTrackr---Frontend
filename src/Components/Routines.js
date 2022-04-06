@@ -39,25 +39,17 @@ const Routines = ({
   // console.log("map", displayActivities);
   return (
     <>
-      <div>
-        {userdata && (
-          <Link className="addpost" to="/add">
-            ADD ROUTINES
-          </Link>
-        )}
-      </div>
-
       <div className="routines-detail">
         {routines &&
           routines.map((routine) => {
             const { id, name, goal, creatorName, activities } = routine;
             return (
-              <div key={id}>
-                <h3>{name} </h3>
+              <div key={id} className="PostBorder">
+                <h3> {name} </h3>
                 <h4> {goal}</h4>
                 <p>
                   <span className="creatorName"></span>
-                  {creatorName}
+                  Created by: {creatorName}
                 </p>
                 <ul>
                   {activities.map(({ id, name }) => {

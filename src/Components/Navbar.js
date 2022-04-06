@@ -1,3 +1,4 @@
+import react from "react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -13,42 +14,39 @@ const linkStyle = {
 const Navbar = ({ userdata, setToken, setUserdata }) => {
   return (
     <>
-      <div className="heading">
-        <div className="horizontal-nav1">
-          <h1 className="prj-name">Fitness Tracker</h1>
-        </div>
+      <body className="navBody">
+        <div className="nav">
+          <label className="siteLogo"></label>
+          <h1 className="nav-Title">Fitness Tracker</h1>
 
-        <div className="horizontal-nav2">
-          {userdata && (
-            <Link to="/" style={linkStyle}>
-              HOME
-            </Link>
-          )}
+          <Link to="/" style={linkStyle}>
+            HOME
+          </Link>
 
           <Link to="/routines" style={linkStyle}>
             ROUTINES
           </Link>
-
           <Link to="/myroutines" style={linkStyle}>
             MY ROUTINES
           </Link>
-
           <Link to="/activities" style={linkStyle}>
             ACTIVITIES
           </Link>
-
           {!userdata && (
             <Link to="/register" style={linkStyle}>
               REGISTER
             </Link>
           )}
-
           {!userdata && (
             <Link to="/login" style={linkStyle}>
               LOGIN
             </Link>
           )}
-
+          {userdata && (
+            <Link className="addpost" to="/add" style={linkStyle}>
+              ADD ROUTINES
+            </Link>
+          )}
           {userdata && (
             <Link
               to="/"
@@ -63,11 +61,7 @@ const Navbar = ({ userdata, setToken, setUserdata }) => {
             </Link>
           )}
         </div>
-
-        {/* <div className="horizontal-nav3">
-          {userdata ? <span>Hello {userdata.username} </span> : null}
-        </div> */}
-      </div>
+      </body>
     </>
   );
 };
