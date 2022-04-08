@@ -51,7 +51,6 @@ const Login = ({ setToken, setUserdata }) => {
           <label>Password</label>
           <input
             required
-            type="text"
             placeholder="Enter password.."
             type="password"
             minLength="8"

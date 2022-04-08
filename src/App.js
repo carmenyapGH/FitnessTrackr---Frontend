@@ -17,6 +17,8 @@ import {
   Register,
   Add,
   Update,
+  NewActivity,
+  EditActivity,
   AddRoutineActivities,
   UpdateRoutineActivities,
   DeleteRoutineActivities,
@@ -222,6 +224,17 @@ function App() {
               setToken={setToken}
               setUserdata={setUserdata}
               action="login"
+            />
+          }
+        />
+        <Route path="/newActivity" element={<NewActivity token={token} />} />
+        <Route
+          path="/EditActivity/:id"
+          element={
+            <EditActivity
+              activities={activities}
+              fetchActivities={fetchActivities}
+              token={token}
             />
           }
         />
